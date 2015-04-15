@@ -9,7 +9,7 @@ describe('Completions', () => {
 
 		const comp = React.addons.TestUtils.renderIntoDocument(
 			React.createElement(Completions,
-				{ items:[{id:1,description:"hello"}]})
+				{ items:[{id:1,text:"hello"}]})
 		);
 
 	    var lis = TestUtils.scryRenderedDOMComponentsWithTag(comp,"li")

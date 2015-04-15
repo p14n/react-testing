@@ -1,5 +1,8 @@
 import React from 'react';
 import Completions from './Completions'
+import Immutable from 'immutable'
+import Data from './Data'
+import csp from 'js-csp'
 
 export default class Search extends React.Component {
 
@@ -7,22 +10,44 @@ export default class Search extends React.Component {
 		super(props);
 
 		this.state = {
-			opts:[]
+			opts:Immutable.List([])
 		};
 	}
 
 	render() {
 
-		const changeFunction = (text) => {
-			this.setState({opts:[
-				{id:1,description:"aaa"}]})
+    const changeFunction = (e) => {
 
-		};
+      var text = e.target.value
+
+      if(text && text.length>3){
+
+        var chan = Data.go('searchStock')
+        var me = this;
+        
+        csp.go(function*(){
+
+          yield csp.put(chan,text)
+          while(!chan.closed){
+
+            var msg = yield csp.take(chan)
+
+            if(msg.constructor === Array){
+                me.setState({opts:Immutable.List(msg)})
+            }
+          }
+        })
+      }
+    };
+    
+    const selectFunction = (item) => {
+      console.log("Selected "+item.description)
+    };
 
 		return <div>
-				<input ref="searchText" onChange={changeFunction}></input>
-				<Completions items={this.state.opts}/>
-			   </div>
+			<input ref="searchText" onChange={changeFunction}></input>
+			<Completions ref="completions" selectFunction={selectFunction} items={this.state.opts}/>
+		</div>
 	}
 
 
