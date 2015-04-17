@@ -1,3 +1,4 @@
+import setup from './setup.js'
 import Completions from '../src/Completions';
 import React from 'react/addons';
 import {expect} from 'chai'

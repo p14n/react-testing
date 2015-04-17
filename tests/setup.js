@@ -1,6 +1,5 @@
 // this handles setup of the fake DOM when the tests are
 // run in Node
-
 import jsdom from 'jsdom';
 
 var FAKE_DOM_HTML = `

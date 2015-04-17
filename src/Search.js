@@ -24,10 +24,12 @@ export default class Search extends React.Component {
 
         var chan = Data.go('searchStock')
         var me = this;
-        
+
         csp.go(function*(){
 
+
           yield csp.put(chan,text)
+
           while(!chan.closed){
 
             var msg = yield csp.take(chan)

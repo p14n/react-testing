@@ -6,7 +6,6 @@ export default class Completions extends React.Component {
 	}
 
 	render() {
-   
 		return <ul>{this.props.items.map(item =>
 			<li onClick={ (e) => { this.props.selectFunction(item) } }
        key={item.id}>{item.text}</li>
